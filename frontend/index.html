@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Text Editor</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <!-- Главная-презентация -->
+  <section id="landing">
+    <h1>AI-редактор текста</h1>
+    <p>Перефразируй, исправь или сократи текст с помощью локальной LLM.</p>
+    <p>Каждый запрос списывает 1 токен с вашего баланса.</p>
+    <button id="startBtn">Начать</button>
+  </section>
+
+  <!-- Логин / регистрация -->
+  <section id="auth" class="hidden">
+    <h2>Вход / Регистрация</h2>
+    <div class="auth-forms">
+      <div>
+        <h3>Регистрация</h3>
+        <input id="regEmail" placeholder="Email">
+        <input id="regPassword" type="password" placeholder="Пароль">
+        <button id="registerBtn">Зарегистрироваться</button>
+        <div id="regMessage" class="message"></div>
+      </div>
+      <div>
+        <h3>Вход</h3>
+        <input id="loginEmail" placeholder="Email">
+        <input id="loginPassword" type="password" placeholder="Пароль">
+        <button id="loginBtn">Войти</button>
+        <div id="loginMessage" class="message"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Личный кабинет -->
+  <section id="dashboard" class="hidden">
+    <h2>Личный кабинет</h2>
+    <p>Email: <span id="userEmail"></span></p>
+    <p>Баланс токенов: <span id="userBalance"></span></p>
+
+    <h3>ИИ-редактор текста</h3>
+    <textarea id="editorInput" rows="6" placeholder="Введите текст..."></textarea>
+    <div>
+      <label>Операция:
+        <select id="editorOperation">
+          <option value="fix">Исправить</option>
+          <option value="paraphrase">Перефразировать</option>
+          <option value="shorten">Сократить</option>
+        </select>
+      </label>
+      <button id="editorRunBtn">Обработать</button>
+    </div>
+    <div id="editorMessage" class="message"></div>
+    <h4>Результат:</h4>
+    <pre id="editorResult"></pre>
+
+    <button id="logoutBtn">Выйти</button>
+  </section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
+

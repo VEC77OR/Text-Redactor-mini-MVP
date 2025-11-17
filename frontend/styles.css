@@ -1,0 +1,12 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.hidden { display: none; }
+section { margin-bottom: 2rem; }
+textarea { width: 100%; }
+button { margin-top: 0.5rem; }
+.message { margin-top: 0.5rem; color: #b00; }
+
