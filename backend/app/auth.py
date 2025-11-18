@@ -32,8 +32,9 @@ class UserRead(BaseModel):
     token_balance: int
     is_admin: bool
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 class Token(BaseModel):
     access_token: str
@@ -93,8 +94,8 @@ def get_current_user(
 @router.post("/register", response_model=UserRead)
 def register(user_in: UserCreate, db: Session = Depends(get_db)):
     if not user_in.email.strip():
-    	raise HTTPException(status_code=400, detail="Email не может быть пустым")
-
+        raise HTTPException(status_code=400, detail="Email не может быть пустым")
+    
     if not user_in.password.strip():
         raise HTTPException(status_code=400, detail="Пароль не может быть пустым")
 

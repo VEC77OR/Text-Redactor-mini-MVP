@@ -20,6 +20,10 @@ const loginMessage = document.getElementById("loginMessage");
 const userEmailSpan = document.getElementById("userEmail");
 const userBalanceSpan = document.getElementById("userBalance");
 
+const topupAmount = document.getElementById("topupAmount");
+const topupBtn = document.getElementById("topupBtn");
+const topupMessage = document.getElementById("topupMessage");
+
 const editorInput = document.getElementById("editorInput");
 const editorOperation = document.getElementById("editorOperation");
 const editorRunBtn = document.getElementById("editorRunBtn");
@@ -76,7 +80,7 @@ registerBtn.onclick = async () => {
           })
           .join(", ");
       } 
-      // Ошибки нашего бэкенда
+      // Ошибки бэкенда
       else if (typeof data.detail === "string") {
         regMessage.textContent = data.detail;
       } else {
@@ -131,6 +135,53 @@ async function loadMe() {
   userBalanceSpan.textContent = user.token_balance;
 }
 
+topupBtn.onclick = async () => {
+  topupMessage.textContent = "";
+  topupMessage.style.color = "red";
+
+  const value = parseFloat(topupAmount.value);
+  if (isNaN(value) || value <= 0) {
+    topupMessage.textContent = "Введите положительную сумму";
+    return;
+  }
+
+  try {
+    const resp = await fetch(`${API_BASE}/billing/topup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ amount: value }),
+    });
+
+    let data = {};
+    try {
+      data = await resp.json();
+    } catch (_) {
+      data = {};
+    }
+
+    if (!resp.ok) {
+      // если бэкенд вернул detail — покажем его
+      if (typeof data.detail === "string") {
+        topupMessage.textContent = data.detail;
+      } else {
+        topupMessage.textContent = "Ошибка пополнения";
+      }
+      return;
+    }
+
+    // успех
+    topupMessage.style.color = "green";
+    topupMessage.textContent = `Пополнено на ${data.tokens_added} токен(ов).`;
+    userBalanceSpan.textContent = data.new_balance;
+    topupAmount.value = "";
+  } catch (e) {
+    topupMessage.textContent = "Сетевая ошибка";
+  }
+};
+
 editorRunBtn.onclick = async () => {
   editorMessage.textContent = "";
   editorResult.textContent = "";
@@ -162,4 +213,3 @@ logoutBtn.onclick = () => {
   accessToken = null;
   show(landing);
 };
-

@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 
 from app.db import Base, engine
 from app import models, auth
-from app.routers import editor
+from app.routers import editor, billing
 
 Base.metadata.create_all(bind=engine)
 
@@ -34,4 +34,4 @@ def serve_index():
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(editor.router, prefix="/api", tags=["editor"])
-
+app.include_router(billing.router, prefix="/api/billing", tags=["billing"])

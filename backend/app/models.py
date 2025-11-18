@@ -1,5 +1,6 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Float
+from sqlalchemy.orm import relationship
 from .db import Base
 
 
@@ -13,3 +14,15 @@ class User(Base):
     token_balance = Column(Integer, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+
+class Transaction(Base):
+    __tablename__ = "transactions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user = relationship("User", backref="transactions")
+    amount_currency = Column(Float, nullable=False)   # введённая сумма в валюте
+    tokens = Column(Integer, nullable=False)          # сколько токенов начислили
+    currency = Column(String, default="TEST")         # пока просто тестовая валюта
+    status = Column(String, default="success")        # "success" / "failed" и т.п.
+    created_at = Column(DateTime, default=datetime.utcnow)

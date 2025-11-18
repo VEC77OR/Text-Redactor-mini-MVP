@@ -10,3 +10,11 @@ textarea { width: 100%; }
 button { margin-top: 0.5rem; }
 .message { margin-top: 0.5rem; color: #b00; }
 
+.topup-block {
+  margin: 0.5rem 0 1.5rem;
+}
+.topup-block input {
+  width: 150px;
+  margin-right: 0.5rem;
+}
+
