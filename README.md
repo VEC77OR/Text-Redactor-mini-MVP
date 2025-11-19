@@ -110,7 +110,7 @@ ollama serve
 
 ---
 
-### 2. Запуск backend
+### 3. Запуск backend
 
 ```bash
 make start
