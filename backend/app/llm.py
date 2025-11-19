@@ -8,11 +8,11 @@ def edit_text(text: str, operation: str) -> str:
 
     # Операции: 'paraphrase' | 'fix' | 'shorten'
     if operation == "paraphrase":
-        task = "Перефразируй этот текст по-русски, сохранив смысл."
+        task = "Rephrase this text, preserving the meaning."
     elif operation == "fix":
-        task = "Исправь грамматические и орфографические ошибки в этом русском тексте."
+        task = "Correct the grammar and spelling errors in this text."
     elif operation == "shorten":
-        task = "Сократи этот русский текст, сохранив основную мысль."
+        task = "Shorten this text while preserving the main idea."
     else:
         raise ValueError("Unknown operation")
 
@@ -21,7 +21,7 @@ def edit_text(text: str, operation: str) -> str:
         "messages": [
             {
                 "role": "system",
-                "content": "Ты редактор русского текста. Испльзуй только слова на русском языке. Отвечай только изменённым текстом, без пояснений."
+                "content": "You are the editor of the text. Reply only with the edited text, without explanation. Use the language in which the request was made."
             },
             {
                 "role": "user",

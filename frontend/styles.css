@@ -17,4 +17,18 @@ button { margin-top: 0.5rem; }
   width: 150px;
   margin-right: 0.5rem;
 }
+#editorResult{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  max-width: 100%;
+  display: block;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 1.4;
+}
 
