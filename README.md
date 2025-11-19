@@ -1,6 +1,6 @@
 # Text Redactor — Mini MVP (FastAPI + Ollama)
 
-Этот mini-продукт для редактирования текста с помощью локальной LLM-модели, системой токенов, личным кабинетом и админ-панелью.
+Это mini-продукт для редактирования текста с помощью локальной LLM-модели, системой токенов, личным кабинетом и админ-панелью.
 
 ## Функциональность
 
@@ -65,21 +65,26 @@
 
 ```
 backend/
-  app/
-    auth.py
-    billing.py
-    editor.py
-    admin.py
-    db.py
-    models.py
-  frontend/
+    venv/
+    app.db
+    Makefile
+    requirements.txt
+    app/
+        auth.py
+        db.py
+        llm.py
+        models.py
+        main.py
+        routers/
+            billing.py
+            editor.py
+            admin.py
+frontend/
     index.html
     admin.html
-    style.css
+    styles.css
     app.js
-  main.py
-  venv/
-  app.db
+    admin.js
 ```
 
 ---
