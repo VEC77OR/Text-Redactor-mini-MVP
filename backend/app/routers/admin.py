@@ -11,6 +11,7 @@ from app.auth import get_current_user, get_db
 router = APIRouter()
 
 
+# Данные пользователя для отображения
 class AdminUserOut(BaseModel):
     id: int
     email: str
@@ -21,6 +22,7 @@ class AdminUserOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+# Информация о транзакции
 class AdminTransactionOut(BaseModel):
     id: int
     user_id: int
@@ -33,16 +35,19 @@ class AdminTransactionOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+# Текущие настройки биллинга
 class SettingsOut(BaseModel):
     currency: str
     token_rate: float
 
 
+# Входные данные для обновления настроек
 class SettingsUpdate(BaseModel):
     currency: str = Field(..., min_length=1)
     token_rate: float = Field(..., gt=0)
 
 
+# Проверка прав администратора
 def require_admin(
     current_user: models.User = Depends(get_current_user),
 ) -> models.User:
@@ -54,6 +59,7 @@ def require_admin(
     return current_user
 
 
+# Получить список всех пользователей
 @router.get("/users", response_model=List[AdminUserOut])
 def list_users(
     db: Session = Depends(get_db),
@@ -63,6 +69,7 @@ def list_users(
     return users
 
 
+# Получить список всех транзакций
 @router.get("/transactions", response_model=List[AdminTransactionOut])
 def list_transactions(
     db: Session = Depends(get_db),
@@ -76,6 +83,7 @@ def list_transactions(
     return transactions
 
 
+# Получить текущие настройки
 @router.get("/settings", response_model=SettingsOut)
 def get_settings(
     db: Session = Depends(get_db),
@@ -90,6 +98,7 @@ def get_settings(
     return SettingsOut(currency=settings.currency, token_rate=settings.token_rate)
 
 
+# Обновить курс токена и валюту для новых пополнений
 @router.post("/settings", response_model=SettingsOut)
 def update_settings(
     body: SettingsUpdate,

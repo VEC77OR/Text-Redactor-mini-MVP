@@ -1,4 +1,3 @@
-# app/routers/editor.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -11,17 +10,20 @@ from app.auth import get_current_user, get_db
 router = APIRouter()
 
 
+# Запрос к ИИ-редактору
 class EditRequest(BaseModel):
     text: str
     operation: str  # "paraphrase" | "fix" | "shorten"
 
 
+# Ответ от ИИ-редактора
 class EditResponse(BaseModel):
     result: str
     tokens_charged: int
     new_balance: int
 
 
+# Запрос к локальной LLM-модели
 @router.post("/editor", response_model=EditResponse)
 def editor_endpoint(
     payload: EditRequest,
@@ -34,6 +36,7 @@ def editor_endpoint(
             detail="Недостаточно токенов. Пополните баланс, чтобы использовать ИИ-редактор.",
         )
 
+    # Списываем токен
     current_user.token_balance -= 1
     db.commit()
     db.refresh(current_user)
@@ -41,12 +44,13 @@ def editor_endpoint(
     try:
         result = edit_text(payload.text, payload.operation)
     except Exception as e:
-        # откатываем токен, если LLM упала
+        # Возвращаем токен, если LLM упала
         current_user.token_balance += 1
         db.add(current_user)
         db.commit()
         raise HTTPException(status_code=500, detail=f"Ошибка LLM: {e}")
 
+    # Возвращаем результат
     return EditResponse(
         result=result,
         tokens_charged=1,

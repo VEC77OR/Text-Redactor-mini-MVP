@@ -1,4 +1,3 @@
-# app/llm.py
 import requests
 
 OLLAMA_URL = "http://localhost:11434/api/chat"
@@ -6,9 +5,8 @@ MODEL_NAME = "qwen2.5:3b"
 
 
 def edit_text(text: str, operation: str) -> str:
-    """
-    operation: 'paraphrase' | 'fix' | 'shorten'
-    """
+
+    # Операции: 'paraphrase' | 'fix' | 'shorten'
     if operation == "paraphrase":
         task = "Перефразируй этот текст по-русски, сохранив смысл."
     elif operation == "fix":
@@ -37,4 +35,3 @@ def edit_text(text: str, operation: str) -> str:
     resp.raise_for_status()
     data = resp.json()
     return data["message"]["content"]
-

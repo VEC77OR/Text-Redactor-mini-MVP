@@ -9,15 +9,18 @@ from app.auth import get_current_user, get_db
 router = APIRouter()
 
 
+# Тело запроса на пополнение
 class TopupRequest(BaseModel):
     amount: float = Field(..., gt=0, description="Сумма в валюте")
 
 
+# Ответ после успешного пополнения баланса
 class TopupResponse(BaseModel):
     tokens_added: int
     new_balance: int
 
 
+# Пополнение баланса
 @router.post("/topup", response_model=TopupResponse)
 def topup(
     body: TopupRequest,
@@ -41,7 +44,8 @@ def topup(
             detail="Сумма слишком мала, чтобы приобрести хотя бы 1 токен",
         )
 
-    tx = models.Transaction(
+    # Создаём запись транзакции
+    transaction = models.Transaction(
         user_id=current_user.id,
         amount_currency=body.amount,
         tokens=tokens,
@@ -51,7 +55,8 @@ def topup(
 
     current_user.token_balance += tokens
 
-    db.add(tx)
+    # Сохраняем
+    db.add(transaction)
     db.add(current_user)
     db.commit()
     db.refresh(current_user)
