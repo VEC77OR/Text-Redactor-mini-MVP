@@ -65,7 +65,6 @@
 
 ```
 backend/
-    venv/
     app.db
     Makefile
     requirements.txt
