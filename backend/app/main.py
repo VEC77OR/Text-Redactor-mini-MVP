@@ -7,7 +7,7 @@ from fastapi.responses import FileResponse
 
 from app.db import Base, engine
 from app import models, auth
-from app.routers import editor, billing
+from app.routers import editor, billing, admin
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +32,12 @@ def serve_index():
   return FileResponse(FRONTEND_DIR / "index.html")
 
 
+@app.get("/admin")
+def serve_admin():
+    return FileResponse(FRONTEND_DIR / "admin.html")
+
+
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(editor.router, prefix="/api", tags=["editor"])
 app.include_router(billing.router, prefix="/api/billing", tags=["billing"])
+app.include_router(admin.router, prefix="/api/admin", tags=["admin"])

@@ -26,3 +26,12 @@ class Transaction(Base):
     currency = Column(String, default="TEST")         # пока просто тестовая валюта
     status = Column(String, default="success")        # "success" / "failed" и т.п.
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Settings(Base):
+    __tablename__ = "settings"
+
+    id = Column(Integer, primary_key=True, index=True)
+    currency = Column(String, default="TEST")
+    token_rate = Column(Float, default=1.0)  # 1 токен = X валюты
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

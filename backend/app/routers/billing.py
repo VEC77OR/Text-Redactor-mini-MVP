@@ -24,8 +24,16 @@ def topup(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
-    # Простое правило: 1 токен = 1 единица валюты
-    tokens = int(body.amount)
+    # получаем/создаём настройки
+    settings = db.query(models.Settings).first()
+    if settings is None:
+        settings = models.Settings(currency="TEST", token_rate=1.0)
+        db.add(settings)
+        db.commit()
+        db.refresh(settings)
+
+    # 1 токен = settings.token_rate единиц валюты
+    tokens = int(body.amount / settings.token_rate)
 
     if tokens <= 0:
         raise HTTPException(
@@ -37,7 +45,7 @@ def topup(
         user_id=current_user.id,
         amount_currency=body.amount,
         tokens=tokens,
-        currency="TEST",
+        currency=settings.currency,
         status="success",
     )
 
