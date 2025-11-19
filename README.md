@@ -92,18 +92,38 @@ frontend/
 
 ### 1. Установка зависимостей
 
+Linux/macOS
 ```bash
 cd backend
-make venv
-make install
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+Windows
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
 ---
 
 ### 2. Установка и запуск Ollama
 
+Linux/macOS
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Windows
+```bash
+Скачать установщик
+https://ollama.com/download/windows
+```
+
+На всех ОС
+```bash
 ollama pull qwen2.5:3b
 ollama serve
 ```
@@ -112,8 +132,18 @@ ollama serve
 
 ### 3. Запуск backend
 
+Linux/macOS
 ```bash
-make start
+cd backend
+source venv/bin/activate
+uvicorn app.main:app --reload
+```
+
+Windows
+```bash
+cd backend
+venv\Scripts\activate
+uvicorn app.main:app --reload
 ```
 
 Открыть браузер:
