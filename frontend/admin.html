@@ -6,63 +6,95 @@
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <h1>Админ-панель</h1>
+  <div class="page">
+    <header class="header">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <span class="logo-text" data-i18n="admin_logo_text">Admin Panel</span>
+      </div>
 
-  <section id="admin-auth">
-    <h2>Вход администратора</h2>
-    <input id="adminEmail" placeholder="Email">
-    <input id="adminPassword" type="password" placeholder="Пароль">
-    <button id="adminLoginBtn">Войти</button>
-    <div id="adminAuthMessage" class="message"></div>
-  </section>
+      <!-- Переключение языка интерфейса -->
+      <div class="lang-switch">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
+      </div>
+    </header>
 
-  <section id="adminPanel" class="hidden">
-    <p>Вы вошли как: <span id="adminUserEmail"></span></p>
+    <!-- Ввод email/пароля -->
+    <section id="admin-auth" class="card">
+      <h1 data-i18n="admin_title">Админ-панель</h1>
 
-    <h2>Настройки курса</h2>
-    <div>
-      <label>Валюта:
-        <input id="currencyInput" placeholder="Например, RUB">
-      </label>
-      <label>1 токен = 
-        <input id="rateInput" type="number" step="0.01" min="0.01">
-        <span id="currencyLabel"></span>
-      </label>
-      <button id="saveSettingsBtn">Сохранить курс</button>
-      <div id="settingsMessage" class="message"></div>
-    </div>
+      <h2 data-i18n="admin_login_title">Вход администратора</h2>
+      <input id="adminEmail"
+             placeholder="Email"
+             data-i18n-ph="admin_email_ph">
+      <input id="adminPassword" type="password"
+             placeholder="Пароль"
+             data-i18n-ph="admin_password_ph">
+      <button id="adminLoginBtn" data-i18n="admin_login_btn">Войти</button>
+      <div id="adminAuthMessage" class="message"></div>
+    </section>
 
-    <h2>Пользователи</h2>
-    <table id="usersTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Email</th>
-          <th>Баланс токенов</th>
-          <th>Админ</th>
-          <th>Дата регистрации</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <!-- Основная админ-панель -->
+    <section id="adminPanel" class="card hidden">
+      <p>
+        <span data-i18n="admin_logged_in_as">Вы вошли как:</span>
+        <span id="adminUserEmail"></span>
+      </p>
 
-    <h2>Транзакции</h2>
-    <table id="txTable">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>User ID</th>
-          <th>Сумма</th>
-          <th>Токены</th>
-          <th>Валюта</th>
-          <th>Статус</th>
-          <th>Дата</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </section>
+      <!-- Блок настройки валюты и курса токена -->
+      <h2 data-i18n="admin_settings_title">Настройки курса</h2>
+      <div>
+        <label>
+          <span data-i18n="admin_currency_label">Валюта:</span>
+          <input id="currencyInput"
+                 placeholder="Например, RUB"
+                 data-i18n-ph="admin_currency_ph">
+        </label>
+        <label>
+          <span data-i18n="admin_rate_label_prefix">1 токен =</span>
+          <input id="rateInput" type="number" step="0.01" min="0.01">
+          <span id="currencyLabel"></span>
+        </label>
+        <button id="saveSettingsBtn" data-i18n="admin_save_settings_btn">
+          Сохранить курс
+        </button>
+        <div id="settingsMessage" class="message"></div>
+      </div>
 
+      <!-- Таблица всех зарегистрированных пользователей -->
+      <h2 data-i18n="admin_users_title">Пользователи</h2>
+      <table id="usersTable">
+        <thead>
+          <tr>
+            <th data-i18n="admin_users_th_id">ID</th>
+            <th data-i18n="admin_users_th_email">Email</th>
+            <th data-i18n="admin_users_th_balance">Баланс токенов</th>
+            <th data-i18n="admin_users_th_is_admin">Админ</th>
+            <th data-i18n="admin_users_th_created_at">Дата регистрации</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <!-- Таблица всех транзакций пополнения токенов -->
+      <h2 data-i18n="admin_tx_title">Транзакции</h2>
+      <table id="txTable">
+        <thead>
+          <tr>
+            <th data-i18n="admin_tx_th_id">ID</th>
+            <th data-i18n="admin_tx_th_user_id">User ID</th>
+            <th data-i18n="admin_tx_th_amount">Сумма</th>
+            <th data-i18n="admin_tx_th_tokens">Токены</th>
+            <th data-i18n="admin_tx_th_currency">Валюта</th>
+            <th data-i18n="admin_tx_th_status">Статус</th>
+            <th data-i18n="admin_tx_th_date">Дата</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
   <script src="/static/admin.js"></script>
 </body>
 </html>

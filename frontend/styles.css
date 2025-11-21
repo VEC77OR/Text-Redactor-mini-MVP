@@ -1,34 +1,386 @@
-body {
-  font-family: system-ui, sans-serif;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
+/* Цветовые переменные */
+:root {
+  --bg: #f4f5fb;
+  --card-bg: #ffffff;
+  --border: #e0e3ee;
+  --accent: #2563eb;
+  --accent-soft: #e0edff;
+  --accent-hover: #1d4ed8;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --danger: #b91c1c;
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
-.hidden { display: none; }
-section { margin-bottom: 2rem; }
-textarea { width: 100%; }
-button { margin-top: 0.5rem; }
-.message { margin-top: 0.5rem; color: #b00; }
 
+/* Базовый reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Базовая типографика и фон */
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #e0edff, #f4f5fb 55%);
+  color: var(--text-main);
+}
+
+/* Контейнер страницы */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+/* Шапка сайта */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* Логотип */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* Точка-акцент логотипа */
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+/* Текст логотипа */
+.logo-text {
+  letter-spacing: 0.02em;
+}
+
+/* Общий отступ секций */
+section {
+  margin-bottom: 24px;
+}
+
+/* Карточка (фон + радиус + тень) */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 24px 20px 22px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+/* Блок landing */
+.landing {
+  text-align: left;
+}
+
+.landing h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+/* Подзаголовок на главной */
+.subtitle {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+}
+
+.bullets {
+  margin: 0 0 20px;
+  padding-left: 20px;
+  color: var(--text-main);
+}
+
+/* Заголовки */
+h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+h4 {
+  margin: 18px 0 8px;
+  font-size: 15px;
+}
+
+/* Обычный текст */
+p {
+  margin: 4px 0;
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Блок с регистрацией и логином */
+.auth-forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 12px;
+}
+
+/* Колонка формы регистрации/входа */
+.auth-column {
+  padding: 12px 14px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #fafbff;
+}
+
+/* Обёртка для полей */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.field span {
+  color: var(--text-muted);
+}
+
+/* Стандартные поля ввода */
+input,
+textarea,
+select {
+  font: inherit;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  background-color: #f9fafb;
+}
+
+/* Поля ввода (фокус) */
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
+  background-color: #ffffff;
+}
+
+/* Поле textarea */
+textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+/* Кнопки */
+.btn {
+  border-radius: 999px;
+  border: none;
+  padding: 8px 18px;
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+  white-space: nowrap;
+}
+
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(37, 99, 235, 0.45);
+}
+
+.btn-outline:hover {
+  background: var(--accent-soft);
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Заголовок личного кабинета */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Блок баланса */
+.balance-box {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 150px;
+  text-align: right;
+}
+
+.balance-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.balance-value {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Разделительная линия */
+.divider {
+  border-top: 1px solid var(--border);
+  margin: 16px 0 12px;
+}
+
+.divider.space {
+  margin-top: 24px;
+}
+
+/* Блок пополнения */
 .topup-block {
-  margin: 0.5rem 0 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
 }
+
 .topup-block input {
-  width: 150px;
-  margin-right: 0.5rem;
+  width: 160px;
 }
-#editorResult{
+
+/* Управление редактором */
+.editor-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.editor-controls select {
+  min-width: 160px;
+}
+
+/* Окно результата */
+.result-box {
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
-
   max-width: 100%;
   display: block;
-  padding: 10px;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  border-radius: 5px;
+  padding: 12px 12px 14px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  border-radius: 10px;
   font-size: 15px;
-  line-height: 1.4;
+  line-height: 1.5;
+  min-height: 80px;
 }
 
+/* Футер личного кабинета */
+.dashboard-footer {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Сообщения об ошибках */
+.message {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+/* Класс скрытия блоков */
+.hidden {
+  display: none;
+}
+
+/* Адаптивная версия для маленьких экранов */
+@media (max-width: 600px) {
+  .card {
+    padding: 18px 14px 16px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .balance-box {
+    text-align: left;
+  }
+}
+
+/* Анимация появления */
+.fade-in {
+    animation: fade 0.25s ease-out;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Переключатель языка */
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: 1rem;
+}
+
+.lang-switch button.active {
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Вертикальные разделители в таблицах */
+#usersTable th, 
+#usersTable td,
+#txTable th,
+#txTable td {
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    padding: 8px 10px;
+}
+
+/* Удаляем правую границу у последнего столбца */
+#usersTable th:last-child,
+#usersTable td:last-child,
+#txTable th:last-child,
+#txTable td:last-child {
+    border-right: none;
+}

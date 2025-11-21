@@ -6,68 +6,163 @@
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
 <body>
-  <!-- Главная-презентация -->
-  <section id="landing">
-    <h1>AI-редактор текста</h1>
-    <p>Перефразируй, исправь или сократи текст с помощью локальной LLM.</p>
-    <p>Каждый запрос списывает 1 токен с вашего баланса.</p>
-    <button id="startBtn">Начать</button>
-  </section>
+  <div class="page">
 
-  <!-- Логин / регистрация -->
-  <section id="auth" class="hidden">
-    <h2>Вход / Регистрация</h2>
-    <div class="auth-forms">
-      <div>
-        <h3>Регистрация</h3>
-        <input id="regEmail" placeholder="Email">
-        <input id="regPassword" type="password" placeholder="Пароль">
-        <button id="registerBtn">Зарегистрироваться</button>
-        <div id="regMessage" class="message"></div>
+    <!-- Шапка сайта: логотип, выбор языка, кнопка входа -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-dot"></span>
+        <span class="logo-text" data-i18n="logo_text">AI Text Editor</span>
       </div>
-      <div>
-        <h3>Вход</h3>
-        <input id="loginEmail" placeholder="Email">
-        <input id="loginPassword" type="password" placeholder="Пароль">
-        <button id="loginBtn">Войти</button>
-        <div id="loginMessage" class="message"></div>
+
+      <div class="lang-switch">
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ru">RU</button>
       </div>
-    </div>
-  </section>
 
-  <!-- Личный кабинет -->
-  <section id="dashboard" class="hidden">
-    <h2>Личный кабинет</h2>
-    <p>Email: <span id="userEmail"></span></p>
-    <p>Баланс токенов: <span id="userBalance"></span></p>
+      <button id="startBtn" class="btn btn-primary btn-sm" data-i18n="header_start">
+        Начать
+      </button>
+    </header>
 
-    <h3>Пополнение баланса (тест)</h3>
-    <div class="topup-block">
-      <input id="topupAmount" type="number" min="1" step="1" placeholder="Сумма в валюте">
-      <button id="topupBtn">Пополнить</button>
+    <!-- Главная презентация с описанием сервиса -->
+    <section id="landing" class="card landing">
+      <h1 data-i18n="landing_title">AI-редактор текста</h1>
+      <p class="subtitle" data-i18n="landing_subtitle">
+        Перефразируйте, исправляйте или сокращайте текст с помощью локальной LLM —
+        без отправки данных в облако.
+      </p>
+      <ul class="bullets">
+        <li data-i18n-html="landing_bullet1">
+          Каждый запрос списывает <strong>1 токен</strong> с баланса.
+        </li>
+        <li data-i18n="landing_bullet2">
+          Пополнение баланса в личном кабинете (тестовый режим).
+        </li>
+        <li data-i18n="landing_bullet3">
+          Поддержка русского и английского языка.
+        </li>
+      </ul>
+      <button id="landingStartBtn" class="btn btn-primary" data-i18n="landing_start_btn">
+        Начать работу
+      </button>
+    </section>
+
+    <!-- Блок авторизации и регистрации пользователя -->
+    <section id="auth" class="card hidden">
+      <h2 data-i18n="auth_title">Вход / Регистрация</h2>
+      <div class="auth-forms">
+        <div class="auth-column">
+          <h3 data-i18n="auth_register_title">Регистрация</h3>
+          <label class="field">
+            <span data-i18n="label_email">Email</span>
+            <input id="regEmail" placeholder="you@example.com"
+                   data-i18n-ph="ph_email">
+          </label>
+          <label class="field">
+            <span data-i18n="label_password">Пароль</span>
+            <input id="regPassword" type="password"
+                   placeholder="Минимум 4 символа"
+                   data-i18n-ph="ph_reg_password">
+          </label>
+          <button id="registerBtn" class="btn btn-primary full-width"
+                  data-i18n="btn_register">
+            Зарегистрироваться
+          </button>
+          <div id="regMessage" class="message"></div>
+        </div>
+        <div class="auth-column">
+          <h3 data-i18n="auth_login_title">Вход</h3>
+          <label class="field">
+            <span data-i18n="label_email">Email</span>
+            <input id="loginEmail" placeholder="you@example.com"
+                   data-i18n-ph="ph_email">
+          </label>
+          <label class="field">
+            <span data-i18n="label_password">Пароль</span>
+            <input id="loginPassword" type="password"
+                   placeholder="Ваш пароль"
+                   data-i18n-ph="ph_login_password">
+          </label>
+          <button id="loginBtn" class="btn btn-outline full-width"
+                  data-i18n="btn_login">
+            Войти
+          </button>
+          <div id="loginMessage" class="message"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Личный кабинет: баланс, редактор текста и операции -->
+    <section id="dashboard" class="card hidden">
+      <div class="dashboard-header">
+        <div>
+          <h2 data-i18n="dashboard_title">Личный кабинет</h2>
+          <p class="muted">
+            <span data-i18n="dashboard_email_label">Email:</span>
+            <span id="userEmail"></span>
+          </p>
+        </div>
+        <div class="balance-box">
+          <span class="balance-label" data-i18n="balance_label">Баланс токенов</span>
+          <span id="userBalance" class="balance-value"></span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 data-i18n="topup_title">Пополнение баланса (тест)</h3>
+      <div class="topup-block">
+        <input id="topupAmount" type="number" min="1" step="1"
+               placeholder="Сумма в валюте"
+               data-i18n-ph="ph_topup_amount">
+        <button id="topupBtn" class="btn btn-primary" data-i18n="btn_topup">
+          Пополнить
+        </button>
+      </div>
       <div id="topupMessage" class="message"></div>
-    </div>
 
-    <h3>ИИ-редактор текста</h3>
-    <textarea id="editorInput" rows="6" placeholder="Введите текст..."></textarea>
-    <div>
-      <label>Операция:
-        <select id="editorOperation">
-          <option value="fix">Исправить</option>
-          <option value="paraphrase">Перефразировать</option>
-          <option value="shorten">Сократить</option>
-        </select>
+      <div class="divider space"></div>
+
+      <h3 data-i18n="editor_title">ИИ-редактор текста</h3>
+      <label class="field">
+        <span data-i18n="editor_source_label">Исходный текст</span>
+        <textarea id="editorInput" rows="6"
+                  placeholder="Вставьте текст, который нужно исправить, перефразировать или сократить..."
+                  data-i18n-ph="ph_editor_input"></textarea>
       </label>
-      <button id="editorRunBtn">Обработать</button>
-    </div>
-    <div id="editorMessage" class="message"></div>
-    <h4>Результат:</h4>
-    <pre id="editorResult"></pre>
 
-    <button id="logoutBtn">Выйти</button>
-  </section>
+      <!-- Настройки операции редактора -->
+      <div class="editor-controls">
+        <label>
+          <span data-i18n="editor_operation_label">Операция:</span>
+          <select id="editorOperation">
+            <option value="fix" data-i18n="op_fix">Исправить</option>
+            <option value="paraphrase" data-i18n="op_paraphrase">Перефразировать</option>
+            <option value="shorten" data-i18n="op_shorten">Сократить</option>
+          </select>
+        </label>
+        <button id="editorRunBtn" class="btn btn-primary"
+                data-i18n="btn_editor_run">
+          Обработать
+        </button>
+      </div>
+
+      <div id="editorMessage" class="message"></div>
+
+      <h4 data-i18n="editor_result_title">Результат</h4>
+      <pre id="editorResult" class="result-box"></pre>
+
+      <div class="dashboard-footer">
+        <button id="logoutBtn" class="btn btn-outline"
+                data-i18n="btn_logout">
+          Выйти
+        </button>
+      </div>
+    </section>
+
+  </div>
 
   <script src="/static/app.js"></script>
 </body>
 </html>
-

@@ -21,11 +21,11 @@ def edit_text(text: str, operation: str) -> str:
         "messages": [
             {
                 "role": "system",
-                "content": "You are the editor of the text. Reply only with the edited text, without explanation. Use the language in which the request was made."
+                "content": "You are the editor of the text. Reply only with the edited text, without explanation. Use the language in which the text was given."
             },
             {
                 "role": "user",
-                "content": f"{task}\n\nТекст:\n{text}"
+                "content": f"{task}\n\nHere is the text:\n{text}"
             }
         ],
         "stream": False,
